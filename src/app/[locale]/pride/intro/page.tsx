@@ -2,7 +2,7 @@ import { alegreyaSans, roboto } from "@/ui/fonts";
 import { getTranslations } from "next-intl/server";
 
 // Base slug without locale suffix
-const BASE_SLUG = "nepal-pride-parade";
+const BASE_SLUG = "overview-of-pride-parade";
 
 async function getPridePost(locale: string) {
     // Dynamically create the localized slug

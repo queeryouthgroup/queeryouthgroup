@@ -31,7 +31,8 @@ export const navbarLinks: NavbarLinks = {
       name: 'Nepal Pride Parade',
       href: '',
       children: [
-        { name: 'Overview', href: '/pride' },
+        { name: 'Overview of Pride Parade', href: '/pride/intro'},
+        { name: 'Introduction to Nepal Pride Parade', href: '/pride' },
         { name: 'Timeline', href: '/pride/timeline' },
         { name: 'Organizers', href: '/pride/organizers' },
         { name: 'Challenges & Achievements', href: '/pride/challenges' },
@@ -57,10 +58,11 @@ export const navbarLinks: NavbarLinks = {
     { name: 'प्रकाशनहरू', href: '/publications' },
     { name: 'शब्दकोश', href: '/dictionary' },
     {
-      name: 'नेपाल गौरव जात्रा',
+      name: 'नेपाल गौरव यात्रा',
       href: '/pride',
       children: [
-        { name: 'परिचय', href: '/pride' },
+        { name: 'गौरव यात्राको परिचय', href: '/pride/intro'},
+        { name: 'नेपाल गौरव यात्राको परिचय', href: '/pride' },
         { name: 'समयरेखा', href: '/pride/timeline' },
         { name: 'आयोजकहरू', href: '/pride/organizers' },
         { name: 'चुनौतीहरू र उपलब्धिहरू', href: '/pride/challenges' },
