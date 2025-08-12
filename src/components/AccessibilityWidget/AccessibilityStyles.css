@@ -1,0 +1,143 @@
+/* Text Scaling */
+.accessibility-text-1 { font-size: 100%; }
+.accessibility-text-2 { font-size: 120%; }
+.accessibility-text-3 { font-size: 140%; }
+.accessibility-text-4 { font-size: 160%; }
+
+/* Line Height */
+.accessibility-line-height-1 { --line-height: 1; }
+.accessibility-line-height-1\.5 { --line-height: 1.5; }
+.accessibility-line-height-1\.75 { --line-height: 1.75; }
+.accessibility-line-height-2 { --line-height: 2; }
+.accessibility-line-height-1 *,
+.accessibility-line-height-1\.5 *,
+.accessibility-line-height-1\.75 *,
+.accessibility-line-height-2 * {
+  line-height: var(--line-height);
+}
+
+/* Text Spacing */
+.accessibility-text-spacing-normal { --letter-spacing: normal; }
+.accessibility-text-spacing-light { --letter-spacing: 0.1em; }
+.accessibility-text-spacing-moderate { --letter-spacing: 0.2em; }
+.accessibility-text-spacing-heavy { --letter-spacing: 0.3em; }
+.accessibility-text-spacing-normal *,
+.accessibility-text-spacing-light *,
+.accessibility-text-spacing-moderate *,
+.accessibility-text-spacing-heavy * {
+  letter-spacing: var(--letter-spacing);
+}
+
+/* Text Alignment */
+.accessibility-text-align-left { text-align: left; }
+.accessibility-text-align-center { text-align: center; }
+.accessibility-text-align-right { text-align: right; }
+.accessibility-text-align-justified { text-align: justify; }
+
+/* Font Types */
+.accessibility-font-normal { font-family: inherit; }
+.accessibility-font-dyslexia { font-family: 'Comic Sans', 'OpenDyslexic', sans-serif; }
+.accessibility-font-legible { font-family: 'Arial', 'Helvetica', sans-serif; }
+
+/* Contrast Modes */
+.accessibility-contrast-normal { filter: none; }
+.accessibility-contrast-invert { filter: invert(100%); }
+.accessibility-contrast-dark {
+  background: #000 !important;
+  color: #fff !important;
+}
+.accessibility-contrast-light {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+/* Saturation */
+.accessibility-saturation-normal { filter: saturate(1); }
+.accessibility-saturation-low { filter: saturate(0.5); }
+.accessibility-saturation-heavy { filter: saturate(1.5); }
+.accessibility-saturation-desaturate { filter: saturate(0); }
+
+/* Link Highlighting */
+.accessibility-highlight-links a {
+  background-color: yellow;
+  color: black !important;
+  padding: 2px 4px;
+  text-decoration: underline !important;
+}
+
+/* Hide Images */
+.accessibility-hide-images img,
+.accessibility-hide-images picture,
+.accessibility-hide-images video {
+  display: none !important;
+}
+
+/* Pause Animations */
+.accessibility-pause-animations * {
+  animation-play-state: paused !important;
+  transition: none !important;
+}
+
+/* Cursors */
+.accessibility-cursor-big {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="black" opacity="0.5"/><circle cx="16" cy="16" r="8" fill="white"/></svg>') 16 16, auto;
+}
+
+.accessibility-cursor-reading-guide::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  background-color: rgba(255, 0, 0, 0.3);
+  z-index: 10000;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.accessibility-cursor-reading-mask {
+  --mask-size: 200px;
+  --mask-position-x: 50%;
+  --mask-position-y: 50%;
+}
+
+.accessibility-cursor-reading-mask::after {
+  content: "";
+  position: fixed;
+  top: calc(var(--mask-position-y) - calc(var(--mask-size) / 2));
+  left: calc(var(--mask-position-x) - calc(var(--mask-size) / 2));
+  width: var(--mask-size);
+  height: var(--mask-size);
+  border-radius: 50%;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  pointer-events: none;
+}
+
+/* Tooltips */
+.accessibility-tooltips [title] {
+  position: relative;
+}
+
+.accessibility-tooltips [title]::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.accessibility-tooltips [title]:hover::after {
+  opacity: 1;
+}

@@ -2,50 +2,23 @@
 
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
 
-// Accessibility state interface
 export interface AccessibilityState {
-  // Contrast
   contrast: 'normal' | 'invert' | 'dark' | 'light';
-  
-  // Links
   highlightLinks: boolean;
-  
-  // Text size
   textSize: 1 | 2 | 3 | 4;
-  
-  // Text spacing
   textSpacing: 'normal' | 'light' | 'moderate' | 'heavy';
-  
-  // Animations
   pauseAnimations: boolean;
-  
-  // Images
   hideImages: boolean;
-  
-  // Fonts
   fontType: 'normal' | 'dyslexia' | 'legible';
-  
-  // Cursor
   cursor: 'normal' | 'big' | 'reading-guide' | 'reading-mask';
-  
-  // Line height
   lineHeight: 1 | 1.5 | 1.75 | 2;
-  
-  // Text alignment
   textAlign: 'left' | 'center' | 'right' | 'justified';
-  
-  // Saturation
   saturation: 'normal' | 'low' | 'heavy' | 'desaturate';
-  
-  // Tooltips
   tooltips: boolean;
-  
-  // Widget state
   isWidgetOpen: boolean;
   hasAccessibilityEnabled: boolean;
 }
 
-// Action types
 type AccessibilityAction =
   | { type: 'SET_CONTRAST'; payload: AccessibilityState['contrast'] }
   | { type: 'TOGGLE_HIGHLIGHT_LINKS' }
@@ -63,7 +36,6 @@ type AccessibilityAction =
   | { type: 'RESET_ALL' }
   | { type: 'LOAD_STATE'; payload: AccessibilityState };
 
-// Initial state
 const initialState: AccessibilityState = {
   contrast: 'normal',
   highlightLinks: false,
@@ -81,7 +53,6 @@ const initialState: AccessibilityState = {
   hasAccessibilityEnabled: false,
 };
 
-// Reducer
 function accessibilityReducer(state: AccessibilityState, action: AccessibilityAction): AccessibilityState {
   let newState = { ...state };
 
@@ -135,7 +106,6 @@ function accessibilityReducer(state: AccessibilityState, action: AccessibilityAc
       return state;
   }
 
-  // Check if any accessibility feature is enabled
   newState.hasAccessibilityEnabled = 
     newState.contrast !== 'normal' ||
     newState.highlightLinks ||
@@ -153,13 +123,11 @@ function accessibilityReducer(state: AccessibilityState, action: AccessibilityAc
   return newState;
 }
 
-// Context
 const AccessibilityContext = createContext<{
   state: AccessibilityState;
   dispatch: React.Dispatch<AccessibilityAction>;
 } | null>(null);
 
-// Provider component
 export function AccessibilityProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(accessibilityReducer, initialState);
 
@@ -181,43 +149,50 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('accessibility-settings', JSON.stringify(state));
   }, [state]);
 
-  // Apply CSS custom properties based on state
+  // Apply CSS classes based on state
   useEffect(() => {
     const root = document.documentElement;
     
-    // Text size
-    root.style.setProperty('--accessibility-text-scale', state.textSize.toString());
+    // Remove all existing accessibility classes
+    const removeClasses = [
+      'accessibility-text-1', 'accessibility-text-2', 'accessibility-text-3', 'accessibility-text-4',
+      'accessibility-line-height-1', 'accessibility-line-height-1.5', 'accessibility-line-height-1.75', 'accessibility-line-height-2',
+      'accessibility-text-spacing-normal', 'accessibility-text-spacing-light', 'accessibility-text-spacing-moderate', 'accessibility-text-spacing-heavy',
+      'accessibility-text-align-left', 'accessibility-text-align-center', 'accessibility-text-align-right', 'accessibility-text-align-justified',
+      'accessibility-font-normal', 'accessibility-font-dyslexia', 'accessibility-font-legible',
+      'accessibility-contrast-normal', 'accessibility-contrast-invert', 'accessibility-contrast-dark', 'accessibility-contrast-light',
+      'accessibility-saturation-normal', 'accessibility-saturation-low', 'accessibility-saturation-heavy', 'accessibility-saturation-desaturate',
+      'accessibility-highlight-links',
+      'accessibility-hide-images',
+      'accessibility-pause-animations',
+      'accessibility-tooltips'
+    ];
     
-    // Line height
-    root.style.setProperty('--accessibility-line-height', state.lineHeight.toString());
+    root.classList.remove(...removeClasses);
     
-    // Text spacing
-    const spacingMap = {
-      normal: '0',
-      light: '0.05em',
-      moderate: '0.1em',
-      heavy: '0.15em'
-    };
-    root.style.setProperty('--accessibility-letter-spacing', spacingMap[state.textSpacing]);
+    // Apply current state classes
+    root.classList.add(`accessibility-text-${state.textSize}`);
+    root.classList.add(`accessibility-line-height-${state.lineHeight}`);
+    root.classList.add(`accessibility-text-spacing-${state.textSpacing}`);
+    root.classList.add(`accessibility-text-align-${state.textAlign}`);
+    root.classList.add(`accessibility-font-${state.fontType}`);
+    root.classList.add(`accessibility-contrast-${state.contrast}`);
+    root.classList.add(`accessibility-saturation-${state.saturation}`);
     
-    // Text alignment
-    root.style.setProperty('--accessibility-text-align', state.textAlign);
+    if (state.highlightLinks) root.classList.add('accessibility-highlight-links');
+    if (state.hideImages) root.classList.add('accessibility-hide-images');
+    if (state.pauseAnimations) root.classList.add('accessibility-pause-animations');
+    if (state.tooltips) root.classList.add('accessibility-tooltips');
     
-    // Apply contrast classes
-    document.body.className = document.body.className.replace(/accessibility-contrast-\w+/g, '');
-    if (state.contrast !== 'normal') {
-      document.body.classList.add(`accessibility-contrast-${state.contrast}`);
+    // Handle cursor effects
+    if (state.cursor === 'reading-mask') {
+      const handleMouseMove = (e: MouseEvent) => {
+        root.style.setProperty('--mask-position-x', `${e.clientX}px`);
+        root.style.setProperty('--mask-position-y', `${e.clientY}px`);
+      };
+      window.addEventListener('mousemove', handleMouseMove);
+      return () => window.removeEventListener('mousemove', handleMouseMove);
     }
-    
-    // Apply other classes
-    document.body.classList.toggle('accessibility-highlight-links', state.highlightLinks);
-    document.body.classList.toggle('accessibility-pause-animations', state.pauseAnimations);
-    document.body.classList.toggle('accessibility-hide-images', state.hideImages);
-    document.body.classList.toggle('accessibility-tooltips', state.tooltips);
-    document.body.classList.toggle(`accessibility-font-${state.fontType}`, state.fontType !== 'normal');
-    document.body.classList.toggle(`accessibility-cursor-${state.cursor}`, state.cursor !== 'normal');
-    document.body.classList.toggle(`accessibility-saturation-${state.saturation}`, state.saturation !== 'normal');
-    
   }, [state]);
 
   return (
@@ -227,7 +202,6 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Hook to use accessibility context
 export function useAccessibility() {
   const context = useContext(AccessibilityContext);
   if (!context) {

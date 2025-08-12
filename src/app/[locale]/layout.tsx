@@ -44,9 +44,11 @@ export default async function RootLayout({
             {children}
             <Footer lang={locale} />
             
-            {/* Now the widget can use the context */}
+            {/* Accessibility Widget */}
             <div className="fixed bottom-6 right-6 z-[9999]">
-              <AccessibilityWidget />
+              <div className="p-2"> {/* Added padding container */}
+                <AccessibilityWidget />
+              </div>
             </div>
           </AccessibilityProvider>
         </NextIntlClientProvider>
