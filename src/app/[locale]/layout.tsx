@@ -37,20 +37,11 @@ export default async function RootLayout({
       </head>
       <body className="min-h-screen w-full flex flex-col flex-grow">
         <NextIntlClientProvider>
-          {/* Wrap everything with AccessibilityProvider */}
-          <AccessibilityProvider>
             <Header lang={locale} />
             <Navbar lang={locale} />
             {children}
             <Footer lang={locale} />
-            
-            {/* Accessibility Widget */}
-            <div className="fixed bottom-6 right-6 z-[9999]">
-              <div className="p-2"> {/* Added padding container */}
-                <AccessibilityWidget />
-              </div>
-            </div>
-          </AccessibilityProvider>
+
         </NextIntlClientProvider>
       </body>
     </html>

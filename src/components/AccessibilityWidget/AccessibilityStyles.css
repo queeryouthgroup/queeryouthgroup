@@ -1,143 +1,287 @@
-/* Text Scaling */
-.accessibility-text-1 { font-size: 100%; }
-.accessibility-text-2 { font-size: 120%; }
-.accessibility-text-3 { font-size: 140%; }
-.accessibility-text-4 { font-size: 160%; }
+/* Enhanced Accessibility Styles */
 
-/* Line Height */
-.accessibility-line-height-1 { --line-height: 1; }
-.accessibility-line-height-1\.5 { --line-height: 1.5; }
-.accessibility-line-height-1\.75 { --line-height: 1.75; }
-.accessibility-line-height-2 { --line-height: 2; }
-.accessibility-line-height-1 *,
-.accessibility-line-height-1\.5 *,
-.accessibility-line-height-1\.75 *,
-.accessibility-line-height-2 * {
-  line-height: var(--line-height);
+/* CSS Custom Properties */
+:root {
+  --accessibility-text-scale: 1;
+  --accessibility-line-height: 1;
+  --accessibility-letter-spacing: 0;
+  --accessibility-text-align: left;
 }
-
-/* Text Spacing */
-.accessibility-text-spacing-normal { --letter-spacing: normal; }
-.accessibility-text-spacing-light { --letter-spacing: 0.1em; }
-.accessibility-text-spacing-moderate { --letter-spacing: 0.2em; }
-.accessibility-text-spacing-heavy { --letter-spacing: 0.3em; }
-.accessibility-text-spacing-normal *,
-.accessibility-text-spacing-light *,
-.accessibility-text-spacing-moderate *,
-.accessibility-text-spacing-heavy * {
-  letter-spacing: var(--letter-spacing);
-}
-
-/* Text Alignment */
-.accessibility-text-align-left { text-align: left; }
-.accessibility-text-align-center { text-align: center; }
-.accessibility-text-align-right { text-align: right; }
-.accessibility-text-align-justified { text-align: justify; }
-
-/* Font Types */
-.accessibility-font-normal { font-family: inherit; }
-.accessibility-font-dyslexia { font-family: 'Comic Sans', 'OpenDyslexic', sans-serif; }
-.accessibility-font-legible { font-family: 'Arial', 'Helvetica', sans-serif; }
 
 /* Contrast Modes */
-.accessibility-contrast-normal { filter: none; }
-.accessibility-contrast-invert { filter: invert(100%); }
+.accessibility-contrast-invert {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+
+.accessibility-contrast-invert * {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+
 .accessibility-contrast-dark {
-  background: #000 !important;
-  color: #fff !important;
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
 }
+
+.accessibility-contrast-dark *:not(.accessibility-widget):not(.accessibility-widget *) {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border-color: #444444 !important;
+}
+
+.accessibility-contrast-dark h1,
+.accessibility-contrast-dark h2,
+.accessibility-contrast-dark h3,
+.accessibility-contrast-dark h4,
+.accessibility-contrast-dark h5,
+.accessibility-contrast-dark h6,
+.accessibility-contrast-dark p,
+.accessibility-contrast-dark span,
+.accessibility-contrast-dark div {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
 .accessibility-contrast-light {
-  background: #fff !important;
-  color: #000 !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
 }
 
-/* Saturation */
-.accessibility-saturation-normal { filter: saturate(1); }
-.accessibility-saturation-low { filter: saturate(0.5); }
-.accessibility-saturation-heavy { filter: saturate(1.5); }
-.accessibility-saturation-desaturate { filter: saturate(0); }
+.accessibility-contrast-light *:not(.accessibility-widget):not(.accessibility-widget *) {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #cccccc !important;
+}
 
-/* Link Highlighting */
+/* Highlight Links */
 .accessibility-highlight-links a {
-  background-color: yellow;
-  color: black !important;
-  padding: 2px 4px;
   text-decoration: underline !important;
+  background-color: #ffff99 !important;
+  color: #000000 !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+  font-weight: bold !important;
+  box-shadow: 0 0 0 2px #ffff99 !important;
+}
+
+.accessibility-highlight-links a:hover,
+.accessibility-highlight-links a:focus {
+  background-color: #ffff66 !important;
+  color: #000000 !important;
+}
+
+/* Pause Animations */
+.accessibility-pause-animations *,
+.accessibility-pause-animations *::before,
+.accessibility-pause-animations *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }
 
 /* Hide Images */
 .accessibility-hide-images img,
 .accessibility-hide-images picture,
-.accessibility-hide-images video {
-  display: none !important;
+.accessibility-hide-images video,
+.accessibility-hide-images canvas,
+.accessibility-hide-images svg:not(.accessibility-widget svg),
+.accessibility-hide-images [role="img"] {
+  visibility: hidden !important;
+  position: relative !important;
 }
 
-/* Pause Animations */
-.accessibility-pause-animations * {
-  animation-play-state: paused !important;
-  transition: none !important;
+.accessibility-hide-images img::after,
+.accessibility-hide-images picture::after {
+  content: "🖼️ Image hidden for accessibility";
+  visibility: visible !important;
+  display: block !important;
+  background-color: #f0f0f0 !important;
+  color: #666666 !important;
+  padding: 10px !important;
+  text-align: center !important;
+  border: 2px dashed #cccccc !important;
+  font-size: 14px !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-/* Cursors */
-.accessibility-cursor-big {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="black" opacity="0.5"/><circle cx="16" cy="16" r="8" fill="white"/></svg>') 16 16, auto;
+/* Font Types */
+@import url('https://fonts.googleapis.com/css2?family=OpenDyslexic&display=swap');
+
+.accessibility-font-dyslexia *:not(.accessibility-widget):not(.accessibility-widget *) {
+  font-family: 'OpenDyslexic', monospace !important;
+}
+
+.accessibility-font-legible *:not(.accessibility-widget):not(.accessibility-widget *) {
+  font-family: 'Arial', 'Helvetica', sans-serif !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+}
+
+/* Cursor Styles */
+.accessibility-cursor-big,
+.accessibility-cursor-big * {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M2 2 L2 26 L10 18 L18 26 L26 18 L18 10 L26 2 Z" fill="black"/><path d="M4 4 L4 22 L10 16 L16 22 L22 16 L16 10 L22 4 Z" fill="white"/></svg>') 16 16, auto !important;
+}
+
+.accessibility-cursor-reading-guide,
+.accessibility-cursor-reading-guide * {
+  cursor: crosshair !important;
+}
+
+.accessibility-cursor-reading-mask,
+.accessibility-cursor-reading-mask * {
+  cursor: help !important;
+}
+
+/* Saturation Filters */
+.accessibility-saturation-low {
+  filter: saturate(0.5) !important;
+}
+
+.accessibility-saturation-heavy {
+  filter: saturate(2) !important;
+}
+
+.accessibility-saturation-desaturate {
+  filter: grayscale(1) !important;
+}
+
+/* Text Scaling */
+.accessibility-text-scale h1 { font-size: calc(2em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale h2 { font-size: calc(1.5em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale h3 { font-size: calc(1.25em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale h4 { font-size: calc(1.1em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale h5 { font-size: calc(1em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale h6 { font-size: calc(0.9em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale p { font-size: calc(1em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale span { font-size: calc(1em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale div { font-size: calc(1em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale a { font-size: calc(1em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale li { font-size: calc(1em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale button { font-size: calc(1em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale input { font-size: calc(1em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale textarea { font-size: calc(1em * var(--accessibility-text-scale)) !important; }
+.accessibility-text-scale label { font-size: calc(1em * var(--accessibility-text-scale)) !important; }
+
+/* Line Height */
+.accessibility-line-height * {
+  line-height: calc(var(--accessibility-line-height) * 1.4) !important;
+}
+
+/* Letter Spacing */
+.accessibility-letter-spacing * {
+  letter-spacing: var(--accessibility-letter-spacing) !important;
+}
+
+/* Text Alignment */
+.accessibility-text-align p,
+.accessibility-text-align div,
+.accessibility-text-align span,
+.accessibility-text-align h1,
+.accessibility-text-align h2,
+.accessibility-text-align h3,
+.accessibility-text-align h4,
+.accessibility-text-align h5,
+.accessibility-text-align h6 {
+  text-align: var(--accessibility-text-align) !important;
+}
+
+/* Tooltips Enhancement */
+.accessibility-tooltips [title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  z-index: 10000;
+  background-color: #333;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  margin-top: 8px;
+}
+
+.accessibility-tooltips [aria-label]:hover::after {
+  content: attr(aria-label);
+  position: absolute;
+  z-index: 10000;
+  background-color: #333;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  margin-top: 8px;
+}
+
+/* Focus indicators for better accessibility */
+.accessibility-highlight-links *:focus {
+  outline: 3px solid #d41367 !important;
+  outline-offset: 2px !important;
+}
+
+/* Widget exclusions to prevent interference */
+.accessibility-widget,
+.accessibility-widget *,
+[class*="accessibility-widget"],
+[class*="accessibility-widget"] * {
+  font-size: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+  text-align: inherit !important;
+  filter: none !important;
+}
+
+/* Ensure widget button is always visible */
+.accessibility-widget button {
+  position: fixed !important;
+  z-index: 9999 !important;
+}
+
+/* Reading guide implementation */
+.accessibility-cursor-reading-guide::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: var(--mouse-x, 0px);
+  width: 2px;
+  height: 100vh;
+  background-color: #ff0000;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.7;
 }
 
 .accessibility-cursor-reading-guide::after {
-  content: "";
+  content: '';
+  position: fixed;
+  top: var(--mouse-y, 0px);
+  left: 0;
+  width: 100vw;
+  height: 2px;
+  background-color: #ff0000;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.7;
+}
+
+/* Reading mask implementation */
+.accessibility-cursor-reading-mask::before {
+  content: '';
   position: fixed;
   top: 0;
-  left: 50%;
-  width: 2px;
-  height: 100%;
-  background-color: rgba(255, 0, 0, 0.3);
-  z-index: 10000;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle 150px at var(--mouse-x, 50%) var(--mouse-y, 50%), transparent 0%, transparent 150px, rgba(0,0,0,0.8) 200px);
   pointer-events: none;
-  transform: translateX(-50%);
-}
-
-.accessibility-cursor-reading-mask {
-  --mask-size: 200px;
-  --mask-position-x: 50%;
-  --mask-position-y: 50%;
-}
-
-.accessibility-cursor-reading-mask::after {
-  content: "";
-  position: fixed;
-  top: calc(var(--mask-position-y) - calc(var(--mask-size) / 2));
-  left: calc(var(--mask-position-x) - calc(var(--mask-size) / 2));
-  width: var(--mask-size);
-  height: var(--mask-size);
-  border-radius: 50%;
-  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.7);
-  z-index: 10000;
-  pointer-events: none;
-}
-
-/* Tooltips */
-.accessibility-tooltips [title] {
-  position: relative;
-}
-
-.accessibility-tooltips [title]::after {
-  content: attr(title);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #333;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 14px;
-  white-space: nowrap;
-  z-index: 100;
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-
-.accessibility-tooltips [title]:hover::after {
-  opacity: 1;
+  z-index: 9998;
 }
