@@ -38,7 +38,7 @@ export default function Header({ lang }: HeaderProps) {
                   </span>
                 ) : (
                   <span className={`${alegreyaSans.className} font-bold whitespace-nowrap text-xl text-center`}>
-                    क्वेयर युथ ग्रुप
+                    क्वयेर युथ ग्रुप
                   </span>
                 )}
               </div>
@@ -49,10 +49,10 @@ export default function Header({ lang }: HeaderProps) {
                   Queer Youth Group
                 </span>
                 <span className={`${alegreyaSans.className} font-bold whitespace-nowrap text-xl text-center`}>
-                  क्वेयर युथ ग्रुप
+                  क्वयेर युथ ग्रुप
                 </span>
                 <span className={`${notoSansNewa.className} font-bold whitespace-nowrap text-xl text-center`}>
-                  𑐎𑑂𑐰𑐾𑐫𑐬 𑐫𑐸𑐠 𑐐𑑂𑐬𑐸𑐥
+                  𑐎𑑂𑐰𑐫𑐾𑐬 𑐫𑐸𑐠 𑐐𑑂𑐬𑐸𑐥
                 </span>
                 <span className={`${gulzar.className} font-bold whitespace-nowrap text-xl text-center`}>
                   کْوَییرَ یُتھَ گْرُپ
