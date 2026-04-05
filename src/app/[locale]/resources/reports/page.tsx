@@ -1,15 +1,16 @@
 import { alegreyaSans, roboto } from "@/ui/fonts"
-import { useTranslations } from "next-intl"
+import { useLocale } from "next-intl"
 
 export default function Page() {
-    const t = useTranslations('publicationPage');
+    // const t = useTranslations('publicationPage');
+    const lang = useLocale(); 
 
     return(
         <div className="w-full flex flex-col flex-grow bg-[#fafafc]">
             <div className="flex flex-col items-center min-h-[30vh] mt-4">
                 <div className="text-center text-2xl">
                     <h1 className={`${alegreyaSans.className} text-black py-4 font-bold`}>
-                        {t('title')}
+                        { lang == 'en' ? 'Reports' : 'प्रतिवेदन' }
                     </h1>
                 </div>
 

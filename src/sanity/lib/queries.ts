@@ -1,4 +1,5 @@
 import { groq } from 'next-sanity'
+import { defineQuery } from 'next-sanity';
 import { PortableTextBlock } from '@portabletext/types'
 
 // Define types for your posts
@@ -59,3 +60,20 @@ export const getPostsBySlugPrefixQuery = groq`
     _updatedAt
   }
 `
+
+// Teampage query 
+export const TEAM_PAGE_QUERY = defineQuery(`
+  *[_type == "teamPage" && slug.current == $slug][0]{
+    title,
+    sections[]{
+      sectionTitle,
+      members[]->{
+        name,
+        role,
+        pronoun,
+        email,
+        "image": image.asset->url
+      }
+    }
+  }
+`);
