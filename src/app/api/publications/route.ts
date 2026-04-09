@@ -1,90 +1,46 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getGraphClient } from '@/lib/microsoft-graph';
-import * as pdfParse from 'pdf-parse';
 
-interface Book {
-  id: string;
-  title: string;
-  downloadUrl: string;
-  coverImage?: string;
-  webUrl: string;
-  lastModified: string;
-  size: number;
-}
+// Map your categories to the specific OneDrive Folder IDs
+const FOLDER_MAP: Record<string, string | undefined> = {
+  publications: process.env.ONEDRIVE_PUBLICATIONS_ID,
+  academic: process.env.ONEDRIVE_ACADEMIC_ID,
+  legal: process.env.ONEDRIVE_LEGAL_ID,
+  reports: process.env.ONEDRIVE_REPORTS_ID,
+};
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const category = searchParams.get('category') || 'publications';
+  const folderId = FOLDER_MAP[category];
+
+  if (!folderId) {
+    return NextResponse.json({ error: 'Invalid category or Folder ID not configured' }, { status: 400 });
+  }
+
   try {
     const client = await getGraphClient();
     
-    // Fetch all PDF files from the specified folder
+    // Fetch files with thumbnails expanded in one go to save API calls
     const response = await client
-      .api(`/drives/${process.env.ONEDRIVE_DRIVE_ID}/items/${process.env.ONEDRIVE_FOLDER_ID}/children`)
-      .filter("endswith(name,'.pdf')")
-      .select('id,name,webUrl,@microsoft.graph.downloadUrl,size,lastModifiedDateTime')
+      .api(`/drives/${process.env.ONEDRIVE_DRIVE_ID}/items/${folderId}/children`)
+      .expand('thumbnails') // Gets covers automatically
+      .select('id,name,webUrl,size,lastModifiedDateTime,thumbnails')
       .get();
 
-    const books: Book[] = await Promise.all(
-      response.value.map(async (file: any) => {
-        let title = file.name.replace('.pdf', '');
-        let coverImage = null;
-
-        try {
-          // Fetch PDF content to extract title
-          const pdfResponse = await fetch(file['@microsoft.graph.downloadUrl']);
-          const arrayBuffer = await pdfResponse.arrayBuffer();
-          const buffer = Buffer.from(arrayBuffer);
-          
-          // Parse PDF metadata
-          const pdfData = await pdfParse(buffer);
-          
-          // Extract title from PDF metadata if available
-          if (pdfData.info?.Title) {
-            title = pdfData.info.Title;
-          }
-
-          // Generate cover image using Microsoft Graph thumbnails
-          coverImage = await generatePdfThumbnail(file.id);
-          
-        } catch (error) {
-          console.error(`Error processing PDF ${file.name}:`, error);
-        }
-
-        return {
-          id: file.id,
-          title,
-          downloadUrl: file['@microsoft.graph.downloadUrl'],
-          webUrl: file.webUrl,
-          lastModified: file.lastModifiedDateTime,
-          size: file.size,
-          coverImage,
-        };
-      })
-    );
+    const books = response.value.map((file: any) => ({
+      id: file.id,
+      title: file.name.replace('.pdf', ''), // Default title
+      webUrl: file.webUrl,
+      lastModified: file.lastModifiedDateTime,
+      size: file.size,
+      // Grab the large thumbnail if it exists
+      coverImage: file.thumbnails?.[0]?.large?.url || null,
+    }));
 
     return NextResponse.json({ books });
   } catch (error) {
-    console.error('Error fetching publications:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch publications' },
-      { status: 500 }
-    );
+    console.error(`Error fetching ${category}:`, error);
+    return NextResponse.json({ error: 'Failed to fetch documents' }, { status: 500 });
   }
-}
-
-async function generatePdfThumbnail(fileId: string): Promise<string | null> {
-  try {
-    const client = await getGraphClient();
-    
-    const thumbnail = await client
-      .api(`/drives/${process.env.ONEDRIVE_DRIVE_ID}/items/${fileId}/thumbnails`)
-      .get();
-    
-    if (thumbnail.value?.[0]?.large?.url) {
-      return thumbnail.value[0].large.url;
-    }
-  } catch (error) {
-    console.error('Error generating thumbnail:', error);
-  }
-  
-  return null;
 }
