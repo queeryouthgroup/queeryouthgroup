@@ -12,6 +12,7 @@
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^3.0.7",
     "@portabletext/react": "^4.0.1",
+    "@portabletext/types": "^4.0.2",
     "@sanity/cli": "^4.5.0",
     "@sanity/client": "^7.9.0",
     "@sanity/core": "^2.36.2",
