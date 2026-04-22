@@ -18,7 +18,7 @@ export default async function PrideEventPage({ params }: PageProps) {
         const postContent = await getLocalizedPostWithFallback(locale, slug);
 
         return (
-            <div className="w-full flex flex-col flex-grow bg-[#fafafc]">
+            <div className="w-full flex flex-col grow bg-[#fafafc]">
                 <div className="flex flex-col items-center mt-4 px-16 md:mx-64 sm:mx-2 mb-16">
                     <h1 className={`${alegreyaSans.className} text-black py-4 font-bold text-2xl`}>
                         {postContent.title}
@@ -37,7 +37,7 @@ export default async function PrideEventPage({ params }: PageProps) {
         console.error(`Error loading pride event post [${slug}]:`, error);
 
         return (
-            <div className="w-full flex flex-col flex-grow bg-[#fafafc]">
+            <div className="w-full flex flex-col grow bg-[#fafafc]">
                 <div className="flex flex-col items-center min-h-[30vh] mt-4">
                     <h1 className={`${alegreyaSans.className} text-red-600 py-4 font-bold text-2xl`}>
                         Content not available

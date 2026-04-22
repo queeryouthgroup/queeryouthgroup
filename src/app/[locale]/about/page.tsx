@@ -28,7 +28,7 @@ export default async function Page({ params }: PageProps) {
         ]);
 
         return (
-            <div className="w-full flex flex-col flex-grow bg-[#fafafc]">
+            <div className="w-full flex flex-col grow bg-[#fafafc]">
                 
                 {/* About Section */}
                 <div className="flex flex-col items-center mt-4 px-16 md:mx-64 sm:mx-2">
@@ -76,7 +76,7 @@ export default async function Page({ params }: PageProps) {
         console.error('Error loading posts from Sanity:', error);
 
         return (
-            <div className="w-full flex flex-col flex-grow bg-[#fafafc]">
+            <div className="w-full flex flex-col grow bg-[#fafafc]">
                 <div className="flex flex-col items-center min-h-[30vh] mt-4">
                     <h1 className={`${alegreyaSans.className} text-red-600 py-4 font-bold text-2xl`}>
                         Content not available

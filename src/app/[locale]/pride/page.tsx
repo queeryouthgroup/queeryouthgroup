@@ -30,7 +30,7 @@ export default function PrideRootPage() {
       : alegreyaSans.className;
 
   return (
-    <div className={`w-full flex flex-col flex-grow bg-white items-center`}>
+    <div className={`w-full flex flex-col grow bg-white items-center`}>
         {/* Header */}
         <div className="text-center text-2xl">
             <h1 className={`${headerFont} text-black font-bold py-4 mt-4`}>

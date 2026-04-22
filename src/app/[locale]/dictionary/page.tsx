@@ -349,7 +349,7 @@ export default function DictionaryPage() {
                       <button
                         key={letter}
                         onClick={() => handleAlphabetClick(letter)}
-                        className={`min-w-[32px] h-8 px-2 rounded-md text-sm font-semibold transition-colors ${
+                        className={`min-w-8 h-8 px-2 rounded-md text-sm font-semibold transition-colors ${
                           selectedAlphabet === letter
                             ? 'bg-[#d41367] text-white'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -371,7 +371,7 @@ export default function DictionaryPage() {
                       <button
                         key={letter}
                         onClick={() => handleAlphabetClick(letter)}
-                        className={`min-w-[32px] h-8 px-2 rounded-md text-sm font-semibold transition-colors ${
+                        className={`min-w-8 h-8 px-2 rounded-md text-sm font-semibold transition-colors ${
                           selectedAlphabet === letter
                             ? 'bg-[#d41367] text-white'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
