@@ -1,6 +1,6 @@
 // app/[locale]/pride/timeline/page.tsx
 import React from 'react';
-import { useTranslations, useLocale, getLocale } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import TimelineClient from '@/components/TimelineClient';
 import { getPrideExcerpts, PrideExcerpt } from '@/lib/getPrideExcerpts';
 import { getTranslations } from 'next-intl/server';
