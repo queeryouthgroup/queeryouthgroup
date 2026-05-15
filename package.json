@@ -35,7 +35,8 @@
     "sanity": "^4.5.0",
     "styled-components": "^6.1.19",
     "swiper": "^11.2.10",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "yet-another-react-lightbox": "^3.32.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

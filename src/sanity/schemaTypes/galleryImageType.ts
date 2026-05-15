@@ -2,6 +2,20 @@
 import { ImageIcon } from '@sanity/icons'
 import { defineField, defineType } from 'sanity'
 
+export type GalleryImage = {
+  _id: string
+  _type: 'galleryImage'
+  title: string
+  image: {
+    _type: 'image'
+    asset: {
+      _ref: string
+    }
+    alt?: string
+  }
+  order?: number
+}
+
 export const galleryImageType = defineType({
   name: 'galleryImage',
   title: 'Gallery Feed',

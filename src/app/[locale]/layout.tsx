@@ -9,6 +9,7 @@ import { AccessibilityProvider } from "@/components/AccessibilityWidget/Accessib
 import AccessibilityWidget from "@/components/AccessibilityWidget"; // This imports from index.tsx
 import "../globals.css";
 import "@/components/AccessibilityWidget/AccessibilityStyles.css"; // Fixed path
+import "yet-another-react-lightbox/styles.css";
 
 export const metadata: Metadata = {
   title: "Queer Youth Group Nepal",
